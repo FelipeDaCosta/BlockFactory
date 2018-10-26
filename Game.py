@@ -15,12 +15,15 @@ clock = pg.time.Clock()
 done = False
 block_list = []
 cam = Camera()
-floor = Block(name='floor', starting_position=(0, cfg.SCREEN_HEIGHT - FLOOR_HEIGHT),
+floor = Block(name='floor',
+              starting_position=(0, cfg.SCREEN_HEIGHT - FLOOR_HEIGHT),
               size=(cfg.SCREEN_WIDTH, FLOOR_HEIGHT), color=cfg.COLOR_BLACK,
               camera=cam)
 
-obstacle = Block(name='obstacle', starting_position=(500, cfg.SCREEN_HEIGHT - FLOOR_HEIGHT -
-                 OBSTACLE_HEIGHT), size=(40, OBSTACLE_HEIGHT),
+obstacle = Block(name='obstacle',
+                 starting_position=(500, cfg.SCREEN_HEIGHT -
+                                    FLOOR_HEIGHT - OBSTACLE_HEIGHT),
+                 size=(40, OBSTACLE_HEIGHT),
                  color=cfg.COLOR_BROWN, camera=cam)
 block_list.append(floor)
 block_list.append(obstacle)
@@ -31,11 +34,23 @@ while not done:
     for event in pg.event.get():
         if event.type == pg.QUIT:
             done = True
+        elif event.type == pg.KEYDOWN:
+            if event.key == pg.K_LEFT:
+                player.xvel = -2
+            elif event.key == pg.K_RIGHT:
+                player.xvel = 2
+            elif event.key == pg.K_SPACE:
+                player.jump()
+        elif event.type == pg.KEYUP:
+            if event.key == pg.K_LEFT:
+                player.xvel = 0
+            elif event.key == pg.K_RIGHT:
+                player.xvel = 0
 
     screen.fill(cfg.COLOR_WHITE)
     for block in block_list:
         block.draw(screen)
-        player.test_collision(block)
+    player.test_collision(block_list)
     player.draw(screen)
     player.update()
     pg.display.flip()

@@ -18,7 +18,7 @@ class Block(object):
         if cfg.is_in_screen((xpos, ypos), (self.width, self.height)):
             pg.draw.rect(surface, self.color,
                          pg.Rect(xpos, ypos, self.width, self.height))
-    
+
     def move(self, distance):
         self.rect.move_ip(*distance)
 
