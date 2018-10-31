@@ -34,7 +34,7 @@ class StateStack(object):
 
 
 class State(object):
-    def __init__(self, input_handler, update, draw, on_delete, screen):
+    def __init__(self, input_handler, update, draw, on_delete, screen, stack):
         """
         Every state object should implement all of these arguments.
         TODO: Figure out how to use ABC in a way that
@@ -48,6 +48,7 @@ class State(object):
         self.draw = draw
         self.delete = on_delete
         self.screen = screen
+        self.stack = stack
 
     def state_run(self):
         """
